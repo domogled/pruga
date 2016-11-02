@@ -3,6 +3,7 @@
 **Пруга** je programovací meta jazyk pro tvorbu webových a mobilních aplikací.
 
 Použité technologie:
-- [markdrown]() => html
-- [elm]() => javascript
-- [php]() => html, json
+- [markdown](http://daringfireball.net/projects/markdown/) => html
+- [elm](http://elm-lang.org/) => javascript
+- [php](http://php.net/) => html, json
+- [toml]() => elm
