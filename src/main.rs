@@ -1,7 +1,26 @@
-mod adder;
+#[macro_use]
+extern crate log;
+extern crate env_logger;
+
+mod pruga;
+mod config;
 
 fn main() {
-    println!("Hello, world!");
+    println!("Hello, Пруга!");
+
+    // Initialize logger
+    env_logger::init().unwrap();
+
+    // Check if we are (somewhere) in a cargo project directory
+    let pruga_dir = match pruga::root() {
+        Some(path) => path,
+        None => {
+            error!("Not a Пруга project, aborting.");
+            std::process::exit(64);
+        },
+    };
+
+    println!("Пруга project directory {:?}", pruga_dir);
 }
 
 /*#[test]
