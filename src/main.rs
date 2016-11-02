@@ -7,9 +7,16 @@ mod config;
 
 fn main() {
     println!("Hello, Пруга!");
+    
+    let current_line = line!();
+    let this_file = file!();
+    println!("defined in file: {} on line: {}", this_file, current_line);
 
+    println!("log level = {:?}", log::max_log_level());
     // Initialize logger
     env_logger::init().unwrap();
+    println!("log level = {:?}", log::max_log_level());
+
 
     // Check if we are (somewhere) in a cargo project directory
     let pruga_dir = match pruga::root() {
@@ -21,6 +28,7 @@ fn main() {
     };
 
     println!("Пруга project directory {:?}", pruga_dir);
+    
 }
 
 /*#[test]

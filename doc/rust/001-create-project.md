@@ -19,3 +19,10 @@ cargo run
 ## logování
 
 Loger je hen [log](https://docs.rs/crate/log) ale nic nevypisuje, nastavování vypisování dělá modul [env_logger](https://doc.rust-lang.org/log/env_logger)
+
+Potom funguje
+```shell
+RUST_LOG=info cargo run
+RUST_LOG=warn cargo run
+RUST_LOG=error cargo run
+```
