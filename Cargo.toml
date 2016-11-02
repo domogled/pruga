@@ -1,0 +1,6 @@
+[package]
+name = "pruga"
+version = "0.1.0"
+authors = ["Петр Болф <petr.bolf@domogled.com>"]
+
+[dependencies]
