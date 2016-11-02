@@ -1,10 +1,4 @@
-mod adder;
-
-fn main() {
-    println!("Hello, world!");
-}
-
-/*#[test]
+#[test]
 fn it_works() {
     assert!(true);
 }
@@ -21,4 +15,4 @@ mod tests {
     fn it_works_2() {
         assert_eq!(4, add_two(2));
     }
-}*/
+}
