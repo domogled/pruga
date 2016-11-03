@@ -1,8 +1,12 @@
 [package]
+authors = ["Петр Болф <petr.bolf@domogled.com>"]
 name = "pruga"
 version = "0.1.0"
-authors = ["Петр Болф <petr.bolf@domogled.com>"]
 
 [dependencies]
+docopt = "0.6.86"
+docopt_macros = "0.6.86"
 env_logger = "^0.3.2"
 log = "^0.3.4"
+rustc-serialize = "0.3.19"
+toml = "0.2.1"
