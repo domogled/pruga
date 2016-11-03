@@ -11,7 +11,7 @@ extern crate docopt;
 
 mod pruga;
 mod config;
-mod get_toml;
+mod parse_file;
 mod build;
 
 docopt!(Args derive Debug, "
@@ -59,7 +59,7 @@ fn main() {
 
 
     // build::run(&args.arg_filename);
-    build::run("./pruga.toml");
+    build::run(pruga_dir.to_str().unwrap());
     
 }
 
