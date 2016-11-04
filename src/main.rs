@@ -4,15 +4,19 @@
 #[macro_use]
 extern crate log;
 extern crate env_logger;
-extern crate toml;
+// extern crate toml;
 
 extern crate rustc_serialize;
 extern crate docopt;
 
-mod pruga;
-mod config;
-mod parse_file;
+use util::important_paths::{find_project_root_directory};
+use std::env;
+use std::path::PathBuf;
+// use std::path::Path;
+
 mod build;
+mod run_php;
+mod util;
 
 docopt!(Args derive Debug, "
 Usage: pruga [<filename>]
@@ -45,21 +49,24 @@ fn main() {
     // Parse CLI parameters
     let args: Args = Args::docopt().decode().unwrap_or_else(|e| e.exit());
     println!("argumenty {:?}", args);
+    
+    // @TODO better default value from command line
+    fn is_workspace(working_path: &str) -> Result<PathBuf, std::io::Error> {
+        match working_path {
+            "" => env::current_dir(), //.unwrap().as_path()
+            path => Ok(PathBuf::from(&path)),  
+        }
+    }
 
-    // Check if we are (somewhere) in a cargo project directory
-    let pruga_dir = match pruga::root() {
-        Some(path) => path,
-        None => {
-            error!("Not a Пруга project, aborting.");
-            std::process::exit(64);
-        },
-    };
+    let cwd = is_workspace(&args.arg_filename).unwrap();
+    
+    let pruga_root_path = find_project_root_directory(&cwd, "pruga.toml")
+        .expect("Adresář {:?} není adresářem projektu Пруга");
+    
+    
+    info!("Пруга project manifest {:?}", pruga_root_path);
 
-    println!("Пруга project directory {:?}", pruga_dir);
-
-
-    // build::run(&args.arg_filename);
-    build::run(pruga_dir.to_str().unwrap());
+    build::file(pruga_root_path.as_path(), "view.md");
     
 }
 
