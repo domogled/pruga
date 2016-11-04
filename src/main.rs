@@ -45,7 +45,7 @@ fn main() {
     // Parse CLI parameters
     let args: Args = Args::docopt().decode().unwrap_or_else(|e| e.exit());
 
-    println!("argumenty {:?}", args);
+    debug!("argumenty {:?}", args);
     
     // @TODO what is better default value a creating Path from command line
     /*fn is_workspace(working_path: &str) -> Result<PathBuf, std::io::Error> {
@@ -61,9 +61,13 @@ fn main() {
         .expect("Adresář {:?} není adresářem projektu Пруга");
     
     
-    info!("Пруга project manifest {:?}", pruga_root_path);
+    debug!("Пруга project manifest {:?}", pruga_root_path);
 
-    build::file(pruga_root_path.as_path(), "view.md");
+    if args.cmd_from {
+        debug!("idu da parsuji {:?} do {:?}", args.arg_part, args.arg_destination);
+    }
+
+    build::file(&pruga_root_path, "view.md");
     
 }
 

@@ -17,7 +17,7 @@ pub fn file(root: &Path, file: &str){
     let extension = path.extension();
     let parent_dir = path.parent();
 
-    println!("path {:?}\nfile {:?}\nextension {:?}\nparent_dir {:?}\n", path, file, extension, parent_dir);
+    debug!("\n\tpath {:?}\n\tfile {:?}\n\textension {:?}\n\tparent_dir {:?}\n---------------------------------------\n", path, file, extension, parent_dir);
 }
 
 /*

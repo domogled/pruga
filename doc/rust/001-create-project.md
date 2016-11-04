@@ -26,3 +26,7 @@ RUST_LOG=info cargo run
 RUST_LOG=warn cargo run
 RUST_LOG=error cargo run
 ```
+omezení na logy jen z některých balíčků
+```
+RUST_LOG=pruga=debug cargo run from view to elm
+```
