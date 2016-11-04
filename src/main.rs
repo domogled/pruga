@@ -14,16 +14,20 @@ use std::env;
 use std::path::PathBuf;
 // use std::path::Path;
 
+
 mod build;
 mod run_php;
 mod util;
 
 docopt!(Args derive Debug, "
-Usage: pruga [<filename>]
+Usage:
+    pruga from <part>... to <destination>... [--project-directory=<project_directory>]
+    pruga set <part> to <value> [--project-directory=<project_directory>]
 
 Options:
   -h, --help    Display this message
   --version     Show version.
+  --project-directory=<project_directory>     set root project directory
 
 `pruga filename` compile fielname to web application
 
@@ -48,6 +52,7 @@ fn main() {
 
     // Parse CLI parameters
     let args: Args = Args::docopt().decode().unwrap_or_else(|e| e.exit());
+
     println!("argumenty {:?}", args);
     
     // @TODO better default value from command line
@@ -58,7 +63,7 @@ fn main() {
         }
     }
 
-    let cwd = is_workspace(&args.arg_filename).unwrap();
+    let cwd = is_workspace(&args.flag_project_directory).unwrap();
     
     let pruga_root_path = find_project_root_directory(&cwd, "pruga.toml")
         .expect("Adresář {:?} není adresářem projektu Пруга");
@@ -70,21 +75,39 @@ fn main() {
     
 }
 
-/*#[test]
-fn it_works() {
-    assert!(true);
+
+#[test]
+fn parse_options() {
+    
+    fn s(x: &str) -> String { x.to_string() }
+
+    let argv = || vec!["pruga", "from", "file1", "file2", "to", "dest/"];
+
+    let args: Args = Args::docopt().argv(argv().into_iter()).decode().unwrap_or_else(|e| e.exit());
+
+    // Now access your argv values.
+    assert!(args.cmd_from);
+    assert_eq!(args.arg_part, vec![s("file1"), s("file2")]);
+    assert!(args.cmd_to);
+    assert_eq!(args.arg_destination, vec![s("dest/")]);
+    assert_eq!(args.flag_project_directory, s(""));
+    // assert_eq!(args.arg_dest, s(""));
 }
 
-pub fn add_two(a: i32) -> i32 {
-    a + 2
+#[test]
+fn parse_options_2() {
+    
+    fn s(x: &str) -> String { x.to_string() }
+
+    let argv = || vec!["pruga", "from", "file1", "file2", "to", "dest/", "--project-directory", "./home/rust/pruga"];
+
+    let args: Args = Args::docopt().argv(argv().into_iter()).decode().unwrap_or_else(|e| e.exit());
+
+    // Now access your argv values.
+    assert!(args.cmd_from);
+    assert_eq!(args.arg_part, vec![s("file1"), s("file2")]);
+    assert!(args.cmd_to);
+    assert_eq!(args.arg_destination, vec![s("dest/")]);
+    assert_eq!(args.flag_project_directory, s("./home/rust/pruga"));
+    // assert_eq!(args.arg_dest, s(""));
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works_2() {
-        assert_eq!(4, add_two(2));
-    }
-}*/
