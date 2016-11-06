@@ -1,6 +1,6 @@
 // use std;
 // use toml;
-
+// use std::fs;
 // use parse_file;
 // use run_php;
 // use std::path::PathBuf;
@@ -9,16 +9,59 @@ use std::path::Path;
 /*
 kompiluje zdrojový soubor
 */
-pub fn file(root: &Path, file: &str){
-    println!("kompiluji {:?} z adresáře projektu {:?}", file, root);
+pub fn make(part: &Path, destination: &Path) -> Result<String, String>{
+    // debug!("kompiluji {:?} do {:?} z adresáře projektu {:?}", part, destination/*, root*/);
 
-    let path = Path::new(file);
+    // let pair = (part, destination);
+
+    let path = Path::new(part);
     let file = path.file_name();
     let extension = path.extension();
     let parent_dir = path.parent();
 
-    debug!("\n\tpath {:?}\n\tfile {:?}\n\textension {:?}\n\tparent_dir {:?}\n---------------------------------------\n", path, file, extension, parent_dir);
+    debug!(
+"
+--------------------------------------
+    path {:?}
+    file {:?}
+    extension {:?}
+    parent_dir {:?}
+---------------------------------------
+"
+, path, file, extension, parent_dir
+);
+
+    /*match pair {
+        ("view", "elm") => {
+
+            let ret = root.join("src-bind/view").read_link();
+
+            debug!("RET {:?}", ret);
+
+            
+
+            view_to_elm(&root.join("src-bind/view"), &root.join("app/view.elm"))   
+        }
+        (_, _) => Err(String::from("Nelze parsovat"))
+    }*/
+
+    Ok(format!("vyzkoušeno"))
 }
+
+/*
+fn view_to_elm(from: &Path, to: &Path)-> Result<String, String> {
+    debug!("view_to_elm {:?} => {:?}", from, to);
+    
+    let source = from.read_link();
+    debug!("view is link from {:?}", source);
+
+    let is_view_md = from.metadata().unwrap().is_file();
+
+    debug!("is_view_md = {:?}", is_view_md);
+
+    Ok(format!("v pořádku {} => {}", "view", "elm"))
+}
+*/
 
 /*
 pub fn run(source_dir: &str) {
