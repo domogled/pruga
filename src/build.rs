@@ -3,24 +3,34 @@
 // use std::fs;
 // use parse_file;
 // use run_php;
-// use std::path::PathBuf;
-use std::path::Path;
+use std::path::PathBuf;
+// use std::path::Path;
 
 /*
 kompiluje zdrojový soubor
 */
-pub fn make(part: &Path, destination: &Path) -> Result<String, String>{
+pub fn make(part: PathBuf, destination: PathBuf) -> Result<String, String>{
     // debug!("kompiluji {:?} do {:?} z adresáře projektu {:?}", part, destination/*, root*/);
 
     // let pair = (part, destination);
 
-    let path = Path::new(part);
-    let file = path.file_name();
-    let extension = path.extension();
-    let parent_dir = path.parent();
+    // let path = Path::new(part);
+    let file = part.file_name();
+    let extension = part.extension();
+    let parent_dir = part.parent();
 
     debug!(
 "
+--------------------------------------
+part
+--------------------------------------
+    path {:?}
+    file {:?}
+    extension {:?}
+    parent_dir {:?}
+---------------------------------------
+--------------------------------------
+destination
 --------------------------------------
     path {:?}
     file {:?}
@@ -28,7 +38,8 @@ pub fn make(part: &Path, destination: &Path) -> Result<String, String>{
     parent_dir {:?}
 ---------------------------------------
 "
-, path, file, extension, parent_dir
+, part, file, extension, parent_dir
+, destination, destination.file_name(), destination.extension(), destination.parent()
 );
 
     /*match pair {

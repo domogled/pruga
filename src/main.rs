@@ -9,10 +9,10 @@ extern crate env_logger;
 extern crate rustc_serialize;
 extern crate docopt;
 
-use util::important_paths::{find_project_root_directory};
+// use util::important_paths::{find_project_root_directory};
 // use std::env;
 use std::path::PathBuf;
-use std::path::Path;
+// use std::path::Path;
 
 mod build;
 mod run_php;
@@ -36,8 +36,11 @@ Options:
 
 If no arguments are provided, then 'пруга' will run `build` and `test`
 "
-,arg_part: Option<PathBuf>
-,arg_destination: Option<PathBuf>
+// @TODO: takto by to bylo pěkné, ale není, protože: Could not decode './dest/' to u8 for '<destination>'.
+// ,arg_part: Option<PathBuf>
+// ,arg_destination: Option<PathBuf>
+,arg_part: Option<std::string::String>
+,arg_destination: Option<std::string::String>
 
 ,arg_transformation: std::vec::Vec<Transformations>
 // ,arg_transformation: std::vec::Vec<std::string::String>
@@ -78,7 +81,11 @@ fn main() {
     if args.cmd_from {
         debug!("idu da parsuji {:?} do {:?}", args.arg_part, args.arg_destination);
         // let vytvoreno = build::make(&pruga_root_path, args.arg_part.unwrap().as_str(), args.arg_destination.as_str());
-        let vytvoreno = build::make(args.arg_part.unwrap().as_path(), args.arg_destination.unwrap().as_path()/*, args.arg_transformation*/);
+
+        // @TODO: kdyby byly cesty dekodovány přímo, což zlobí
+        // let vytvoreno = build::make(args.arg_part.unwrap().as_path(), args.arg_destination.unwrap().as_path()/*, args.arg_transformation*/);
+        let vytvoreno = build::make(PathBuf::from(args.arg_part.unwrap()), PathBuf::from(args.arg_destination.unwrap())/*, args.arg_transformation*/);
+
         debug!("build make vrátil {:?}", vytvoreno);
     }
 
@@ -99,12 +106,13 @@ fn parse_options() {
     // Now access your argv values.
     assert!(args.cmd_from);
 
-    assert_eq!(args.arg_part, Some(PathBuf::from(s("./src/view.md"))));
+    // assert_eq!(args.arg_part, Some(PathBuf::from("./example_src/view.md")));
+    assert_eq!(args.arg_part, Some(s("./example_src/view.md")));
 
     assert!(args.cmd_to);
 
-    // assert_eq!(args.arg_destination, vec![s("dPathBufest/")]);
-    assert_eq!(args.arg_destination, Some(PathBuf::from("./dest/")));
+    // assert_eq!(args.arg_destination, Some(PathBuf::from("./dest/")));
+    assert_eq!(args.arg_destination, Some(s("./dest/")));
 
     assert_eq!(args.arg_transformation, vec![Transformations::Php, Transformations::Md2html, Transformations::Html2elm]);
     // assert_eq!(args.arg_transformation, vec![s("php"), s("md2html"), s("html2elm")]);
