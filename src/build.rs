@@ -6,10 +6,13 @@
 use std::path::PathBuf;
 // use std::path::Path;
 
+use std;
+use Transformations;
+
 /*
 kompiluje zdrojový soubor
 */
-pub fn make(part: PathBuf, destination: PathBuf) -> Result<String, String>{
+pub fn make(part: PathBuf, destination: PathBuf, transformations: std::vec::Vec<Transformations>) -> Result<String, String>{
     // debug!("kompiluji {:?} do {:?} z adresáře projektu {:?}", part, destination/*, root*/);
 
     // let pair = (part, destination);
@@ -41,6 +44,18 @@ destination
 , part, file, extension, parent_dir
 , destination, destination.file_name(), destination.extension(), destination.parent()
 );
+
+
+
+    for x in &transformations {
+        match x {
+            &Transformations::Php => println!("transformace {}", "php"),
+            // Md2html, Html2elm, Router2elm, Model2elm
+            _ => println!("neznámá transformace {}", "x")
+        }
+        
+    }
+
 
     /*match pair {
         ("view", "elm") => {

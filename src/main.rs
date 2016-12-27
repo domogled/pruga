@@ -21,7 +21,7 @@ mod util;
 #[derive(Debug)]
 #[derive(PartialEq)]
 #[derive(RustcDecodable)]
-enum Transformations { Php, Md2html, Html2elm, Router2elm, Modle2elm }
+pub enum Transformations { Php, Md2html, Html2elm, Router2elm, Model2elm }
 
 docopt!(Args derive Debug, "
 Usage:
@@ -83,8 +83,8 @@ fn main() {
         // let vytvoreno = build::make(&pruga_root_path, args.arg_part.unwrap().as_str(), args.arg_destination.as_str());
 
         // @TODO: kdyby byly cesty dekodovány přímo, což zlobí
-        // let vytvoreno = build::make(args.arg_part.unwrap().as_path(), args.arg_destination.unwrap().as_path()/*, args.arg_transformation*/);
-        let vytvoreno = build::make(PathBuf::from(args.arg_part.unwrap()), PathBuf::from(args.arg_destination.unwrap())/*, args.arg_transformation*/);
+        // let vytvoreno = build::make(args.arg_part.unwrap().as_path(), args.arg_destination.unwrap().as_path(), args.arg_transformation);
+        let vytvoreno = build::make(PathBuf::from(args.arg_part.unwrap()), PathBuf::from(args.arg_destination.unwrap()), args.arg_transformation);
 
         debug!("build make vrátil {:?}", vytvoreno);
     }
