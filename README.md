@@ -7,3 +7,7 @@ Použité technologie:
 - [elm](http://elm-lang.org/) => javascript
 - [php](http://php.net/) => html, json
 - [toml](https://github.com/toml-lang/toml) => elm
+
+# VSCODE
+
+[vscode tips and tricks](https://github.com/Microsoft/vscode-tips-and-tricks)
